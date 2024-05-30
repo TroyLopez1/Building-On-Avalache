@@ -76,4 +76,6 @@ Once you are on the Remix website, create a new file by clicking on the "+" icon
 (e.g., HelloWorld.sol). Then copy the code given in the assessment.
 
 ## Author
-Marc Danniel Mariazeta 61902476@ntc.edu.ph
+Julian Caster Troy Lopez
+BSIT
+National Teachers College
