@@ -24,12 +24,14 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract DegenToken is ERC20 {
     address public owner;
 
+    mapping(address => bool) public redeemedItems;
+
     event TokensMinted(address indexed recipient, uint256 amount);
     event TokensTransferred(address indexed from, address indexed to, uint256 amount);
     event TokensRedeemed(address indexed player, uint256 amount);
     event TokensBurned(address indexed owner, uint256 amount);
 
-    constructor(string memory name, string memory symbol, uint256 initialSupply) ERC20(name, symbol) {
+    constructor(uint256 initialSupply) ERC20("Degen", "DGN") {
         owner = msg.sender;
         _mint(msg.sender, initialSupply);
     }
@@ -52,7 +54,9 @@ contract DegenToken is ERC20 {
 
     function redeemTokens(uint256 amount) external {
         require(balanceOf(msg.sender) >= amount, "Insufficient balance");
+        require(!redeemedItems[msg.sender], "Item already redeemed");
         _burn(msg.sender, amount);
+        redeemedItems[msg.sender] = true;
         emit TokensRedeemed(msg.sender, amount);
     }
 
@@ -65,8 +69,11 @@ contract DegenToken is ERC20 {
         _burn(msg.sender, amount);
         emit TokensBurned(msg.sender, amount);
     }
-}
 
+    function redeemedToken(address account) external view returns (bool) {
+        return redeemedItems[account];
+    }
+}
 
    
         
